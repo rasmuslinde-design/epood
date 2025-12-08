@@ -1,13 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-POOD</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <title>E‑Pood</title>
   </head>
   <body>
-    <h1>Tere tulemast meie e-poodi!</h1>
+    <header>
+      <h1>Tere tulemast meie e‑poodi!</h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i></a>
+          </li>
+          <li>
+            <a href="favorites.html"><i class="fas fa-heart"></i></a>
+          </li>
+          <li>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-    <script type="module" src="main.js"></script>
+    <main>
+      <h2>Kõik tooted</h2>
+      <div id="product-list"></div>
+    </main>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
