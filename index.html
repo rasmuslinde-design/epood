@@ -8,33 +8,36 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <title>E‑Pood</title>
+    <title>GoblinShack</title>
   </head>
   <body>
     <header>
-      <h1>Tere tulemast meie e‑poodi!</h1>
+      <div id="brand">
+        <a href="#" id="nav-brand">
+          <img src="images/GoblinShack.png" alt="GoblinShack Logo" id="brand-logo" />
+          <span id="brand-name">GoblinShack</span>
+        </a>
+      </div>
       <nav>
         <ul>
-          <li>
-            <a href="index.html"><i class="fas fa-home"></i></a>
-          </li>
-          <li>
-            <a href="favorites.html"><i class="fas fa-heart"></i></a>
-          </li>
-          <li>
-            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
-          </li>
+          <li><a href="#" id="nav-home"><i class="fas fa-home"></i></a></li>
+          <li><a href="#" id="nav-favorites"><i class="fas fa-heart"></i></a></li>
+          <li><a href="#" id="nav-cart"><i class="fas fa-shopping-cart"></i></a></li>
         </ul>
       </nav>
+      <div id="cart-status">🛒 0</div>
     </header>
 
     <main>
       <h2>Kõik tooted</h2>
       <div id="product-list"></div>
+      <div id="product-details"></div>
+      <div id="cart-view" style="display: none"></div>
+      <div id="favorites-view" style="display: none"></div>
     </main>
 
     <footer>
-      <p>&copy; 2025 Rasmuse E‑Pood</p>
+      <p>&copy; 2025 GoblinShack</p>
     </footer>
     <script type="module" src="./main.js"></script>
   </body>

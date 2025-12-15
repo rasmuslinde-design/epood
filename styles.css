@@ -1,3 +1,4 @@
+/* Reset and base styles */
 body,
 h1,
 ul {
@@ -6,6 +7,11 @@ ul {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+  background-color: #f9f9f9;
+}
+
+/* Header and navigation */
 header {
   display: flex;
   justify-content: space-between;
@@ -15,9 +21,31 @@ header {
   padding: 1rem 2rem;
 }
 
-header h1 {
-  font-size: 1.5rem;
+#brand a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   color: #fff;
+}
+
+#brand-logo {
+  height: 1.5rem;
+  width: auto;
+  margin-right: 20px; /* increase spacing */
+  transform: scale(2); /* or 2.5 if you like */
+  transform-origin: left center;
+}
+
+
+#brand-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 nav ul {
@@ -39,13 +67,32 @@ nav a:hover {
   background-color: #777;
 }
 
+/* Cart status badge */
+#cart-status {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Main headings */
+h2 {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Product list and cards */
 #product-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
   padding: 20px;
-  background-color: #f9f9f9;
 }
 
 .product-card {
@@ -61,6 +108,7 @@ nav a:hover {
   flex-direction: column;
   justify-content: space-between;
   border: 2px solid #333;
+  cursor: pointer;
 }
 
 .product-card:hover {
@@ -124,9 +172,179 @@ nav a:hover {
   background-color: #c82333;
 }
 
+/* Product details view */
+#product-details {
+  display: none;
+  border: 2px solid #333;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+#product-details img {
+  max-width: 300px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+#back-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#back-button:hover {
+  background-color: #777;
+}
+
+#product-description {
+  margin-top: 15px;
+  text-align: center;
+  padding-top: 18px;
+}
+
+/* Cart and favorites views containers */
+#cart-view,
+#favorites-view {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 15px 20px;
+}
+
+/* Cart and favorites items */
+.cart-item,
+.favorite-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.cart-item:last-child,
+.favorite-item:last-child {
+  border-bottom: none;
+}
+
+.cart-image,
+.favorite-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-item p,
+.favorite-item p {
+  margin: 0;
+  flex: 1;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Cart controls */
+.cart-item button,
+.favorite-item button {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart-item .increase,
+.cart-item .decrease {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cart-item .increase:hover,
+.cart-item .decrease:hover {
+  background-color: #0056b3;
+}
+
+.cart-item .remove,
+.favorite-item .remove-fav {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.cart-item .remove:hover,
+.favorite-item .remove-fav:hover {
+  background-color: #c82333;
+}
+
+/* Totals */
+#cart-view p:last-child {
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Heart animation */
+.heart-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 3rem;
+  opacity: 1;
+  animation: fadeOut 1s ease forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -100px);
+  }
+}
+
+/* Cart animation */
+.cart-animation {
+  position: fixed;
+  top: 70px; /* just below header/nav */
+  left: 50%;
+  font-size: 2rem;
+  opacity: 1;
+  transform: translateX(-50%);
+  animation: cartFadeOut 1s ease forwards;
+}
+
+@keyframes cartFadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -30px);
+  }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 5px;
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .product-card {
     width: 45%;
+  }
+  #cart-view,
+  #favorites-view {
+    margin: 10px;
   }
 }
 
@@ -134,19 +352,13 @@ nav a:hover {
   .product-card {
     width: 100%;
   }
-}
-h2 {
-  text-align: center;
-  margin: 20px 0;
-  color: #333;
-}
-
-footer {
-  text-align: center;
-  padding: 1px;
-  background-color: #333;
-  color: #fff;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+  header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #cart-status {
+    top: auto;
+    bottom: 60px;
+    right: 10px;
+  }
 }
