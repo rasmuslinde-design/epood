@@ -1,4 +1,4 @@
-import { favorites } from "../main.js";
+import { favorites } from "./main.js";
 
 export function renderFavorites() {
   const container = document.querySelector("#favorites-view");

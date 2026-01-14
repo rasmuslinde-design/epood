@@ -1,83 +1,78 @@
 import { Cart } from "./constructors/cart.js";
 import { Customer } from "./constructors/customer.js";
-import { fetchProducts, fetchData } from "./api.js";
-
+import { fetchProducts } from "./api.js";
 import { renderAllProducts } from "./Allviews/allProductsView.js";
 import { renderCart } from "./Allviews/cartView.js";
 import { renderFavorites } from "./Allviews/favoritesView.js";
 
-export const cart = new Cart();
-export const favorites = [];
-export const customer = new Customer("Oskar Tallo");
-
-let products = [];
-
-async function initApp() {
-  console.log("Rakendus käivitub...");
-
-  products = await fetchProducts();
-
-  if (products) {
-    console.log("Tooted laetud:", products);
-    renderAllProducts(products);
-  }
-
-  const data = await fetchData();
-  if (data) {
-    console.log("Kõik andmed bäkendist käes:", data);
-  }
-}
-
-initApp();
-
-document.querySelector("#nav-home").addEventListener("click", (event) => {
-  event.preventDefault();
-  document.querySelector("#product-list").style.display = "flex";
-  document.querySelector("#product-details").style.display = "none";
-  document.querySelector("#cart-view").style.display = "none";
-  document.querySelector("#favorites-view").style.display = "none";
-});
-
-document.querySelector("#nav-brand").addEventListener("click", (event) => {
-  event.preventDefault();
-  document.querySelector("#product-list").style.display = "flex";
-  document.querySelector("#product-details").style.display = "none";
-  document.querySelector("#cart-view").style.display = "none";
-  document.querySelector("#favorites-view").style.display = "none";
-});
-
-document.querySelector("#nav-cart").addEventListener("click", (event) => {
-  event.preventDefault();
-  document.querySelector("#product-list").style.display = "none";
-  document.querySelector("#product-details").style.display = "none";
-  document.querySelector("#favorites-view").style.display = "none";
-  document.querySelector("#cart-view").style.display = "block";
-  renderCart();
-});
-
-document.querySelector("#nav-favorites").addEventListener("click", (event) => {
-  event.preventDefault();
-  document.querySelector("#product-list").style.display = "none";
-  document.querySelector("#product-details").style.display = "none";
-  document.querySelector("#cart-view").style.display = "none";
-  document.querySelector("#favorites-view").style.display = "block";
-  renderFavorites();
-});
-
-export { products };
-
 if (!sessionStorage.getItem("customerId")) {
   sessionStorage.setItem(
     "customerId",
-    "user_" + Math.random().toString(36).substr(2, 9)
+    "user_" + Math.random().toString(36).substring(2, 9)
   );
 }
-const currentCustomerId = sessionStorage.getItem("customerId");
+export const currentCustomerId = sessionStorage.getItem("customerId");
+
+export const cart = new Cart();
+const savedCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+if (savedCart.length > 0) {
+  cart.items = savedCart;
+}
+
+export const favorites = [];
+export const customer = new Customer("Oskar Tallo");
+export let products = [];
 
 export function saveCartToLocal(cartItems) {
   localStorage.setItem("shoppingCart", JSON.stringify(cartItems));
 }
 
-export function getCartFromLocal() {
-  return JSON.parse(localStorage.getItem("shoppingCart")) || [];
+async function initApp() {
+  try {
+    products = await fetchProducts();
+    if (products) {
+      renderAllProducts(products);
+    }
+  } catch (err) {
+    console.error("Viga andmete laadimisel:", err);
+  }
+}
+
+initApp();
+
+document.querySelector("#nav-home").addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleView("product-list");
+});
+
+document.querySelector("#nav-brand").addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleView("product-list");
+});
+
+document.querySelector("#nav-cart").addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleView("cart-view");
+  renderCart();
+});
+
+document.querySelector("#nav-favorites").addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleView("favorites-view");
+  renderFavorites();
+});
+
+function toggleView(viewId) {
+  const views = [
+    "product-list",
+    "product-details",
+    "cart-view",
+    "favorites-view",
+  ];
+  views.forEach((id) => {
+    const el = document.querySelector(`#${id}`);
+    if (el)
+      el.style.display =
+        id === viewId ? (id === "product-list" ? "flex" : "block") : "none";
+  });
 }

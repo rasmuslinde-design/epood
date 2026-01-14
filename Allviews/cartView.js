@@ -1,4 +1,4 @@
-import { cart } from "../main.js";
+import { cart } from "./main.js";
 import { updateCartStatus } from "./uiHelpers.js";
 
 export function renderCart() {

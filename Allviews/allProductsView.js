@@ -1,6 +1,10 @@
-import { cart, favorites } from "../main.js";
+import { cart, favorites } from "./main.js";
 import { renderProductDetails } from "./productDetailView.js";
-import { updateCartStatus, showHeartAnimation, showCartAnimation } from "./uiHelpers.js";
+import {
+  updateCartStatus,
+  showHeartAnimation,
+  showCartAnimation,
+} from "./uiHelpers.js";
 
 export function renderAllProducts(products) {
   const container = document.querySelector("#product-list");
@@ -27,14 +31,16 @@ export function renderAllProducts(products) {
       console.log(`${p.title} lisatud ostukorvi.`);
     });
 
-    card.querySelector(".add-to-favorites").addEventListener("click", (event) => {
-      event.stopPropagation();
-      if (!favorites.some((fav) => fav.id === p.id)) {
-        favorites.push(p);
-        showHeartAnimation();
-        console.log(`${p.title} lisatud lemmikutesse.`);
-      }
-    });
+    card
+      .querySelector(".add-to-favorites")
+      .addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (!favorites.some((fav) => fav.id === p.id)) {
+          favorites.push(p);
+          showHeartAnimation();
+          console.log(`${p.title} lisatud lemmikutesse.`);
+        }
+      });
 
     card.addEventListener("click", (event) => {
       if (event.target.tagName.toLowerCase() === "button") return;

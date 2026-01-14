@@ -1,4 +1,4 @@
-import { Order } from "/constructors/order.js";
+import { Order } from "./constructors/order.js";
 import { saveOrder } from '../api.js';
 
 export class Customer {
