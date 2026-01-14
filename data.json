@@ -242,5 +242,9 @@
     }
   ],
   "orders": [],
-  "favorites": {}
+  "favorites": {
+    "user_nci1yarj4": [
+      2
+    ]
+  }
 }

@@ -8,7 +8,6 @@ export function renderProductDetails(product) {
 
   showView("product-details", product.title);
 
-  // Kontrollime, kas toode on lemmikutes
   const isFavorite = favorites.some(f => f.id === product.id);
 
   details.innerHTML = `

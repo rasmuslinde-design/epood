@@ -9,7 +9,6 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-// Staatilised failid
 app.use(express.static(__dirname));
 
 const readData = () => {
@@ -20,8 +19,6 @@ const readData = () => {
     return { products: [], favorites: {} };
   }
 };
-
-// ---------- API ----------
 
 app.get("/api/products", (req, res) => {
   res.json(readData().products);
@@ -87,8 +84,6 @@ app.delete("/api/favorites", (req, res) => {
   res.json(data.favorites?.[customerId] || []);
 });
 
-// ---------- SPA ROUTING (EXPRESS 5 FIX) ----------
-// REGEX CATCH-ALL — AINUS ÕIGE VIIS
 app.get(/.*/, (req, res) => {
   if (req.path.includes(".")) {
     return res.status(404).send("Faili ei leitud");

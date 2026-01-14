@@ -3,10 +3,10 @@ import { renderAllProducts } from "./Allviews/allProductsView.js";
 import { renderCart } from "./Allviews/cartView.js";
 import { renderFavorites } from "./Allviews/favoritesView.js";
 import { updateCartStatus } from "./Allviews/uiHelpers.js";
+import { loadFavorites } from "./state.js";
 
 let allProducts = [];
 
-// --- ÜLESANNE 4: SESSIOONI HALDUS ---
 function initSession() {
   let clientId = sessionStorage.getItem("clientId");
   if (!clientId) {
@@ -19,7 +19,14 @@ function initSession() {
 }
 
 export function showView(viewId, title) {
+  console.log("Vahetan vaadet:", viewId);
   const views = ["product-list", "product-details", "cart-view", "favorites-view"];
+  
+  const filters = document.getElementById("category-filters");
+  if (filters) {
+    filters.style.display = (viewId === "product-list") ? "flex" : "none";
+  }
+
   views.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -36,7 +43,6 @@ export function showView(viewId, title) {
   window.scrollTo(0, 0);
 }
 
-// --- ÜLESANNE 2.3: KATEGOORIATE KUVAMINE ---
 function renderCategoryFilters(categories) {
   const filterContainer = document.getElementById("category-filters");
   if (!filterContainer) return;
@@ -60,7 +66,6 @@ function renderCategoryFilters(categories) {
       if (category === "all") {
         renderAllProducts(allProducts);
       } else {
-        // ÜLESANNE 2.2: Filtreerimine
         const filtered = await fetchProductsByCategory(category);
         renderAllProducts(filtered);
       }
@@ -70,17 +75,25 @@ function renderCategoryFilters(categories) {
 
 async function init() {
   const clientId = initSession();
-  console.log("Sessioon algatatud kliendile:", clientId);
-
-  allProducts = await fetchProducts();
-  const categories = await fetchCategories();
   
-  renderCategoryFilters(categories);
-  showView("product-list", "Kõik tooted");
-  renderAllProducts(allProducts);
+  await loadFavorites();
+
+  try {
+    allProducts = await fetchProducts();
+    const categories = await fetchCategories();
+    
+    renderCategoryFilters(categories);
+    showView("product-list", "Kõik tooted");
+    renderAllProducts(allProducts);
+  } catch (error) {
+    console.error("Viga serveriga ühendumisel:", error);
+    const list = document.getElementById("product-list");
+    if (list) list.innerHTML = "<p>Viga: Kontrolli, kas server.js töötab!</p>";
+  }
+
   updateCartStatus();
 
-  // --- NAVIGATSIOONI PARANDUS (ID-PÕHINE) ---
+  // --- NAVIGATSIOON ---
   
   document.getElementById("nav-home").onclick = (e) => {
     e.preventDefault();
@@ -90,7 +103,7 @@ async function init() {
 
   document.getElementById("nav-favorites").onclick = (e) => {
     e.preventDefault();
-    renderFavorites();
+    renderFavorites(allProducts); 
   };
 
   document.getElementById("nav-cart").onclick = (e) => {
@@ -104,7 +117,10 @@ async function init() {
     renderAllProducts(allProducts);
   };
 
-  document.getElementById("cart-status").onclick = () => renderCart();
+  document.getElementById("cart-status").onclick = (e) => {
+    e.preventDefault();
+    renderCart();
+  };
 }
 
 init();

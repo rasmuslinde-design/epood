@@ -1,28 +1,63 @@
 import { favorites, toggleFavorite } from "../state.js";
 import { showView } from "../main.js";
 
-export function renderFavorites() {
+export function renderFavorites(allProducts) {
   const container = document.querySelector("#favorites-view");
+  if (!container) return;
+
   showView("favorites-view", "Sinu lemmikud");
 
-  if (favorites.length === 0) {
-    container.innerHTML = "<p style='text-align:center; padding:20px;'>Sul pole veel lemmikuid.</p>";
+  const favoriteProducts = allProducts.filter(product => 
+    favorites.includes(product.id)
+  );
+
+  if (favoriteProducts.length === 0) {
+    container.innerHTML = `
+      <div class="fav-container-new" style="text-align:center; padding:50px;">
+        <p style="color: #666; font-size: 1.1rem;">Sul pole veel lemmikuid.</p>
+      </div>`;
     return;
   }
 
-  container.innerHTML = favorites.map(item => `
-    <div class="favorite-item">
-      <img src="${item.image}" class="favorite-image">
-      <p>${item.title}</p>
-      <button class="remove-fav" data-id="${item.id}">Eemalda</button>
+  container.innerHTML = `
+    <div class="fav-container-new">
+      <div class="fav-header-row">
+        <span>Toode</span>
+        <span class="hide-mobile">Hind</span>
+        <span style="text-align: right;">Eemalda</span>
+      </div>
+      
+      <div class="fav-list-content">
+        ${favoriteProducts.map(product => `
+          <div class="fav-custom-row">
+            <div class="fav-product-info">
+              <img src="${product.image}" class="fav-thumbnail" alt="${product.title}">
+              <span style="font-weight: 500;">${product.title}</span>
+            </div>
+            
+            <div class="hide-mobile">
+              <strong>${product.price.toFixed(2)} €</strong>
+            </div>
+            
+            <div style="text-align: right;">
+              <button class="fav-remove-btn" data-id="${product.id}" title="Eemalda lemmikutest">
+                ✕
+              </button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
     </div>
-  `).join("");
+  `;
 
-  container.querySelectorAll(".remove-fav").forEach(btn => {
-    btn.onclick = () => {
-      const product = favorites.find(f => f.id == btn.dataset.id);
-      toggleFavorite(product);
-      renderFavorites();
+  container.querySelectorAll(".fav-remove-btn").forEach(btn => {
+    btn.onclick = async (e) => {
+      const productId = parseInt(btn.dataset.id);
+      const product = allProducts.find(p => p.id === productId);
+      if (product) {
+        await toggleFavorite(product);
+        renderFavorites(allProducts);
+      }
     };
   });
 }

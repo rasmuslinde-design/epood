@@ -8,7 +8,8 @@ export function renderAllProducts(products) {
   container.innerHTML = "";
 
   products.forEach((product) => {
-    const isFavorite = favorites.some(f => f.id === product.id);
+    const isFavorite = favorites.includes(product.id);
+    
     const card = document.createElement("div");
     card.className = "product-card";
 
@@ -27,15 +28,16 @@ export function renderAllProducts(products) {
     // Lisa korvi klikk
     card.querySelector(".add-to-cart").onclick = (e) => {
       e.stopPropagation();
-      cart.addProduct(product, 1); // See kutsub nüüd state.js meetodit
+      cart.addProduct(product, 1);
       updateCartStatus();
       showCartAnimation();
     };
 
-    // Südame klikk
-    card.querySelector(".fav-icon").onclick = (e) => {
+    card.querySelector(".fav-icon").onclick = async (e) => {
       e.stopPropagation();
-      const added = toggleFavorite(product);
+      
+      const added = await toggleFavorite(product);
+      
       e.target.innerText = added ? '❤️' : '🤍';
       if (added) showHeartAnimation();
     };
