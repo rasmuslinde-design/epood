@@ -1,25 +1,24 @@
 import { cart } from "../state.js";
 
 export function updateCartStatus() {
-  const cartStatus = document.getElementById("cart-status");
-  if (cartStatus) {
-    const count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    cartStatus.innerText = `🛒 ${count}`;
+  const badge = document.getElementById("cart-status");
+  if (badge) {
+    badge.innerHTML = `🛒 ${cart.getTotalCount()}`;
   }
 }
 
 export function showCartAnimation() {
-  const anim = document.createElement("div");
-  anim.className = "cart-animation";
-  anim.innerText = "Lisatud korvi! 🚀";
-  document.body.appendChild(anim);
-  setTimeout(() => anim.remove(), 1000);
+  createAnimation("🛒");
 }
 
 export function showHeartAnimation() {
-  const anim = document.createElement("div");
-  anim.className = "heart-animation";
-  anim.innerText = "❤️";
-  document.body.appendChild(anim);
-  setTimeout(() => anim.remove(), 1000);
+  createAnimation("❤️");
+}
+
+function createAnimation(emoji) {
+  const el = document.createElement("div");
+  el.className = emoji === "❤️" ? "heart-animation" : "cart-animation";
+  el.innerText = emoji;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1000);
 }

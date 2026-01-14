@@ -1,27 +1,28 @@
-import { favorites } from "../state.js";
+import { favorites, toggleFavorite } from "../state.js";
+import { showView } from "../main.js";
 
 export function renderFavorites() {
   const container = document.querySelector("#favorites-view");
-  container.innerHTML = "<h2>Lemmikud</h2>";
+  showView("favorites-view", "Sinu lemmikud");
 
   if (favorites.length === 0) {
-    container.innerHTML += "<p>Lemmikuid pole veel lisatud.</p>";
+    container.innerHTML = "<p style='text-align:center; padding:20px;'>Sul pole veel lemmikuid.</p>";
     return;
   }
 
-  favorites.forEach((product) => {
-    const div = document.createElement("div");
-    div.className = "favorite-item";
-    div.innerHTML = `
-      <img src="${product.image}" alt="${product.title}" class="favorite-image">
-      <p>${product.title} - €${product.price.toFixed(2)}</p>
-      <button class="remove-fav">Eemalda</button>
-    `;
-    div.querySelector(".remove-fav").addEventListener("click", () => {
-      const index = favorites.findIndex((f) => f.id === product.id);
-      if (index !== -1) favorites.splice(index, 1);
+  container.innerHTML = favorites.map(item => `
+    <div class="favorite-item">
+      <img src="${item.image}" class="favorite-image">
+      <p>${item.title}</p>
+      <button class="remove-fav" data-id="${item.id}">Eemalda</button>
+    </div>
+  `).join("");
+
+  container.querySelectorAll(".remove-fav").forEach(btn => {
+    btn.onclick = () => {
+      const product = favorites.find(f => f.id == btn.dataset.id);
+      toggleFavorite(product);
       renderFavorites();
-    });
-    container.appendChild(div);
+    };
   });
 }
