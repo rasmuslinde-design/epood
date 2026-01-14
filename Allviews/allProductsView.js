@@ -1,27 +1,59 @@
 import { renderProductDetails } from "./productDetailView.js";
 import { cart, favorites } from "../state.js";
-import { updateCartStatus, showCartAnimation, showHeartAnimation } from "./uiHelpers.js";
+import {
+  updateCartStatus,
+  showCartAnimation,
+  showHeartAnimation,
+} from "./uiHelpers.js";
 
 export function renderAllProducts(products) {
   const container = document.querySelector("#product-list");
   if (!container) return;
 
   container.innerHTML = "";
-  container.style.display = "flex";
 
   products.forEach((product) => {
+    const isFavorite = favorites.some((f) => f.id === product.id);
+
     const card = document.createElement("div");
     card.className = "product-card";
+
+    // Muudetud struktuur: pilt ja süda on ühises konteineris
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.title}" class="product-image">
+      <div class="product-image-container">
+        <img src="${product.image}" alt="${
+      product.title
+    }" class="product-image">
+        <div class="fav-icon">
+          ${isFavorite ? "❤️" : "🤍"}
+        </div>
+      </div>
       <h3>${product.title}</h3>
-      <p>${product.price.toFixed(2)} €</p>
-      <button class="add-to-cart">Lisa korvi</button>
-      <button class="add-to-favorites">Lemmikutesse</button>
+      <div class="card-footer">
+        <p>${product.price.toFixed(2)} €</p>
+        <button class="add-to-cart">Lisa ostukorvi</button>
+      </div>
     `;
 
+    // Südame (toggle) loogika
+    const favIcon = card.querySelector(".fav-icon");
+    favIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const index = favorites.findIndex((f) => f.id === product.id);
+
+      if (index === -1) {
+        favorites.push(product);
+        favIcon.innerText = "❤️";
+        showHeartAnimation();
+      } else {
+        favorites.splice(index, 1);
+        favIcon.innerText = "🤍";
+      }
+    });
+
+    // Kaardile vajutus avab detailid (aga mitte nupule vajutades)
     card.addEventListener("click", (e) => {
-      if (e.target.tagName !== "BUTTON") {
+      if (!e.target.closest("button") && !e.target.closest(".fav-icon")) {
         renderProductDetails(product);
       }
     });
@@ -31,14 +63,6 @@ export function renderAllProducts(products) {
       cart.addProduct(product, 1);
       updateCartStatus();
       showCartAnimation();
-    });
-
-    card.querySelector(".add-to-favorites").addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (!favorites.find(f => f.id === product.id)) {
-        favorites.push(product);
-        showHeartAnimation();
-      }
     });
 
     container.appendChild(card);
