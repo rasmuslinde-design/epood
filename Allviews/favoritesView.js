@@ -1,4 +1,4 @@
-import { favorites } from "../main.js";
+import { favorites } from "../state.js";
 
 export function renderFavorites() {
   const container = document.querySelector("#favorites-view");
@@ -15,7 +15,7 @@ export function renderFavorites() {
     div.innerHTML = `
       <img src="${product.image}" alt="${product.title}" class="favorite-image">
       <p>${product.title} - €${product.price.toFixed(2)}</p>
-      <button class="remove-fav">Remove</button>
+      <button class="remove-fav">Eemalda</button>
     `;
     div.querySelector(".remove-fav").addEventListener("click", () => {
       const index = favorites.findIndex((f) => f.id === product.id);

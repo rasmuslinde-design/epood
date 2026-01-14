@@ -1,78 +1,51 @@
-import { Cart } from "./constructors/cart.js";
-import { Customer } from "./constructors/customer.js";
-import { fetchProducts } from "./api.js";
 import { renderAllProducts } from "./Allviews/allProductsView.js";
+import { updateCartStatus } from "./Allviews/uiHelpers.js";
 import { renderCart } from "./Allviews/cartView.js";
 import { renderFavorites } from "./Allviews/favoritesView.js";
 
-if (!sessionStorage.getItem("customerId")) {
-  sessionStorage.setItem(
-    "customerId",
-    "user_" + Math.random().toString(36).substring(2, 9)
-  );
-}
-export const currentCustomerId = sessionStorage.getItem("customerId");
-
-export const cart = new Cart();
-const savedCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
-if (savedCart.length > 0) {
-  cart.items = savedCart;
-}
-
-export const favorites = [];
-export const customer = new Customer("Oskar Tallo");
 export let products = [];
-
-export function saveCartToLocal(cartItems) {
-  localStorage.setItem("shoppingCart", JSON.stringify(cartItems));
-}
 
 async function initApp() {
   try {
-    products = await fetchProducts();
-    if (products) {
-      renderAllProducts(products);
-    }
+    const res = await fetch("/api/products");
+    if (!res.ok) throw new Error("Andmete laadimine ebaõnnestus");
+    products = await res.json();
+    renderAllProducts(products);
+    updateCartStatus();
   } catch (err) {
-    console.error("Viga andmete laadimisel:", err);
+    console.error("Viga:", err);
   }
 }
 
-initApp();
-
-document.querySelector("#nav-home").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleView("product-list");
-});
-
-document.querySelector("#nav-brand").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleView("product-list");
-});
-
-document.querySelector("#nav-cart").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleView("cart-view");
-  renderCart();
-});
-
-document.querySelector("#nav-favorites").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleView("favorites-view");
-  renderFavorites();
-});
-
-function toggleView(viewId) {
-  const views = [
-    "product-list",
-    "product-details",
-    "cart-view",
-    "favorites-view",
-  ];
-  views.forEach((id) => {
-    const el = document.querySelector(`#${id}`);
-    if (el)
-      el.style.display =
-        id === viewId ? (id === "product-list" ? "flex" : "block") : "none";
+export function showView(viewId, title) {
+  const views = ["product-list", "product-details", "cart-view", "favorites-view"];
+  views.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = (id === viewId) ? (id === 'product-list' ? 'flex' : 'block') : 'none';
+    }
   });
+  const titleEl = document.querySelector("h2");
+  if (titleEl) titleEl.innerText = title;
+  window.scrollTo(0, 0);
 }
+
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target.id === "nav-home" || target.closest("#nav-brand")) {
+    e.preventDefault();
+    showView("product-list", "Kõik tooted");
+  } 
+  else if (target.id === "nav-cart") {
+    e.preventDefault();
+    renderCart(); // JÕUSTAB UUENDAMISE
+    showView("cart-view", "Sinu ostukorv");
+  } 
+  else if (target.id === "nav-favorites") {
+    e.preventDefault();
+    renderFavorites(); // JÕUSTAB UUENDAMISE
+    showView("favorites-view", "Sinu lemmikud");
+  }
+});
+
+initApp();

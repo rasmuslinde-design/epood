@@ -3,45 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <title>GoblinShack</title>
   </head>
   <body>
     <header>
       <div id="brand">
         <a href="#" id="nav-brand">
-          <img
-            src="images/GoblinShack.png"
-            alt="GoblinShack Logo"
-            id="brand-logo"
-          />
+          <img src="images/GoblinShack.png" alt="Logo" id="brand-logo" />
           <span id="brand-name">GoblinShack</span>
         </a>
       </div>
       <nav>
         <ul>
-          <li>
-            <a href="#" id="nav-home"><i class="fas fa-home"></i></a>
-          </li>
-          <li>
-            <a href="#" id="nav-favorites"><i class="fas fa-heart"></i></a>
-          </li>
-          <li>
-            <a href="#" id="nav-cart"><i class="fas fa-shopping-cart"></i></a>
-          </li>
+          <li><a href="#" id="nav-home">Avaleht</a></li>
+          <li><a href="#" id="nav-favorites">Lemmikud</a></li>
+          <li><a href="#" id="nav-cart">Ostukorv</a></li>
         </ul>
       </nav>
       <div id="cart-status">🛒 0</div>
     </header>
 
     <main>
-      <h2>Kõik tooted</h2>
+      <h2 id="view-title">Kõik tooted</h2>
       <div id="product-list"></div>
-      <div id="product-details"></div>
+      <div id="product-details" style="display: none"></div>
       <div id="cart-view" style="display: none"></div>
       <div id="favorites-view" style="display: none"></div>
     </main>
@@ -49,6 +36,7 @@
     <footer>
       <p>&copy; 2025 GoblinShack</p>
     </footer>
-    <script type="module" src="/main.js"></script>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

@@ -1,47 +1,43 @@
-import { cart, favorites } from "../main.js";
+// Allviews/productDetailView.js
+import { cart, favorites } from "../state.js"; // PARANDUS: impordi state.js failist
 import {
   updateCartStatus,
-  showHeartAnimation,
   showCartAnimation,
+  showHeartAnimation,
 } from "./uiHelpers.js";
+import { showView } from "../main.js";
 
 export function renderProductDetails(product) {
   const list = document.querySelector("#product-list");
   const details = document.querySelector("#product-details");
 
-  list.style.display = "none";
-  details.style.display = "block";
+  showView("product-details", product.title);
 
   details.innerHTML = `
-    <h2>${product.title}</h2>
-    <img src="${product.image}" alt="${product.title}">
-    <p>Kategooria: ${product.category}</p>
-    <p>Hind: €${product.price.toFixed(2)}</p>
-    <p id="product-description">Kirjeldus: See on suurepärane toode nimega ${
-      product.title
-    }.</p>
-    <button id="back-button">Tagasi</button>
-    <button class="add-to-cart">Lisa korvi</button>
-    <button class="add-to-favorites">Lisa lemmikutesse</button>
+    <div class="product-detail-container">
+        <button id="back-button">← Tagasi</button>
+        <img src="${product.image}" alt="${product.title}">
+        <p>${product.description || "Toote kirjeldus."}</p>
+        <p><strong>Hind: ${product.price.toFixed(2)} €</strong></p>
+        <button class="add-to-cart">Lisa korvi</button>
+        <button class="add-to-favorites">Lisa lemmikutesse</button>
+    </div>
   `;
 
   details.querySelector("#back-button").addEventListener("click", () => {
-    details.style.display = "none";
-    list.style.display = "flex";
+    showView("product-list", "Kõik tooted");
   });
 
   details.querySelector(".add-to-cart").addEventListener("click", () => {
     cart.addProduct(product, 1);
     updateCartStatus();
     showCartAnimation();
-    console.log(`${product.title} lisatud ostukorvi.`);
   });
 
   details.querySelector(".add-to-favorites").addEventListener("click", () => {
-    if (!favorites.some((fav) => fav.id === product.id)) {
+    if (!favorites.find((f) => f.id === product.id)) {
       favorites.push(product);
       showHeartAnimation();
-      console.log(`${product.title} lisatud lemmikutesse.`);
     }
   });
 }

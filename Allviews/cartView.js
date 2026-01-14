@@ -1,4 +1,4 @@
-import { cart } from "../main.js";
+import { cart } from "../state.js";
 import { updateCartStatus } from "./uiHelpers.js";
 
 export function renderCart() {
@@ -13,16 +13,15 @@ export function renderCart() {
   cart.items.forEach((item) => {
     const div = document.createElement("div");
     div.className = "cart-item";
-
     div.innerHTML = `
-      <img src="${item.product.image}" alt="${
-      item.product.title
-    }" class="cart-image">
+      <img src="${item.product.image}" alt="${item.product.title}" class="cart-image">
       <p>${item.product.title}</p>
-      <button class="decrease">-</button>
-      <span>${item.quantity}</span>
-      <button class="increase">+</button>
-      <button class="remove">Remove</button>
+      <div class="cart-controls">
+        <button class="decrease">-</button>
+        <span>${item.quantity}</span>
+        <button class="increase">+</button>
+      </div>
+      <button class="remove">Eemalda</button>
       <p>€${(item.product.price * item.quantity).toFixed(2)}</p>
     `;
 
@@ -33,8 +32,9 @@ export function renderCart() {
     });
 
     div.querySelector(".decrease").addEventListener("click", () => {
-      item.quantity--;
-      if (item.quantity <= 0) {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
         cart.removeProduct(item.product.id);
       }
       updateCartStatus();
@@ -51,8 +51,7 @@ export function renderCart() {
   });
 
   const total = document.createElement("p");
-  total.innerHTML = `<strong>Kogusumma: €${cart
-    .calculateTotal()
-    .toFixed(2)}</strong>`;
+  total.className = "cart-total";
+  total.innerHTML = `<strong>Kogusumma: €${cart.calculateTotal().toFixed(2)}</strong>`;
   container.appendChild(total);
 }
