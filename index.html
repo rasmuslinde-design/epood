@@ -5,36 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <title>GoblinShack</title>
+    <title>GoblinShack - Sinu lemmik e-pood</title>
   </head>
   <body>
     <header>
       <div id="brand">
-        <a href="#" id="nav-brand">
-          <img src="images/GoblinShack.png" alt="Logo" id="brand-logo" />
+        <a href="#" id="brand-link">
+          <img src="images/GoblinShack.png" alt="GoblinShack Logo" id="brand-logo" />
           <span id="brand-name">GoblinShack</span>
         </a>
       </div>
-<nav>
-  <ul>
-    <li><a href="#">Kodu</a></li>
-    <li><a href="#">Lemmikud</a></li>
-    <li><a href="#">Ostukorv</a></li>
-  </ul>
-</nav>
-      <div id="cart-status">🛒 0</div>
+      
+      <nav>
+        <ul>
+          <li><a href="#" id="nav-home"><i class="fas fa-home"></i> Kodu</a></li>
+          <li><a href="#" id="nav-favorites"><i class="fas fa-heart"></i> Lemmikud</a></li>
+          <li><a href="#" id="nav-cart"><i class="fas fa-shopping-basket"></i> Ostukorv</a></li>
+        </ul>
+      </nav>
+
+      <div id="user-session-info" style="color: #ccc; font-size: 0.8rem; margin-right: 60px;">
+        Kasutaja: <span id="client-id-display">Laeb...</span>
+      </div>
+
+      <div id="cart-status" title="Vaata ostukorvi">🛒 0</div>
     </header>
 
-<main>
-  <h2>Kõik tooted</h2>
-  <div id="product-list"></div>
-  <div id="product-details" style="display:none;"></div>
-  <div id="cart-view" style="display:none;"></div>
-  <div id="favorites-view" style="display:none;"></div>
-</main>
+    <main>
+      <h2 id="main-heading">Kõik tooted</h2>
+      
+      <div id="category-filters"></div>
+
+      <section id="product-list" class="view"></section>
+      
+      <section id="product-details" class="view" style="display:none;"></section>
+      
+      <section id="cart-view" class="view" style="display:none;"></section>
+      
+      <section id="favorites-view" class="view" style="display:none;"></section>
+    </main>
 
     <footer>
-      <p>&copy; 2025 GoblinShack</p>
+      <p>&copy; 2026 GoblinShack | Kõik õigused kaitstud</p>
     </footer>
 
     <script type="module" src="./main.js"></script>

@@ -428,3 +428,22 @@ footer {
   border-top: 2px solid #333;
   padding-top: 10px;
 }
+.filter-btn {
+  padding: 8px 16px;
+  border: 2px solid #333;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover {
+  background: #eee;
+}
+
+.filter-btn.active {
+  background: #333;
+  color: white;
+}

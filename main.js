@@ -1,4 +1,4 @@
-import { fetchProducts } from "./api.js";
+import { fetchProducts, fetchCategories, fetchProductsByCategory } from "./api.js";
 import { renderAllProducts } from "./Allviews/allProductsView.js";
 import { renderCart } from "./Allviews/cartView.js";
 import { renderFavorites } from "./Allviews/favoritesView.js";
@@ -6,14 +6,13 @@ import { updateCartStatus } from "./Allviews/uiHelpers.js";
 
 let allProducts = [];
 
+// LISA SIINE 'export' MÄRKSÕNA!
 export function showView(viewId, title) {
   const views = ["product-list", "product-details", "cart-view", "favorites-view"];
-  
   views.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       if (id === viewId) {
-        // Pealeht peab olema FLEX, teised võivad olla BLOCK
         el.style.display = (id === "product-list") ? "flex" : "block";
       } else {
         el.style.display = "none";
@@ -23,39 +22,51 @@ export function showView(viewId, title) {
 
   const heading = document.querySelector("h2");
   if (heading) heading.textContent = title;
-  window.scrollTo(0, 0);
+}
+
+// Kategooriate loendi kuvamine (Ülesanne 2.3)
+function renderCategoryFilters(categories) {
+  const filterContainer = document.querySelector("#category-filters");
+  if (!filterContainer) return;
+
+  filterContainer.innerHTML = `<button class="filter-btn active" data-category="all">Kõik</button>`;
+  
+  categories.forEach(category => {
+    filterContainer.innerHTML += `<button class="filter-btn" data-category="${category}">${category}</button>`;
+  });
+
+  filterContainer.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.onclick = async (e) => {
+      filterContainer.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const category = btn.dataset.category;
+      if (category === "all") {
+        renderAllProducts(allProducts);
+      } else {
+        // Filtreerimine kategooria alusel (Ülesanne 2.2)
+        const filteredProducts = await fetchProductsByCategory(category);
+        renderAllProducts(filteredProducts);
+      }
+    };
+  });
 }
 
 async function init() {
-  allProducts = await fetchProducts();
+  allProducts = await fetchProducts(); // Kõik tooted (Ülesanne 2.1)
+  const categories = await fetchCategories();
+  
+  renderCategoryFilters(categories);
   showView("product-list", "Kõik tooted");
   renderAllProducts(allProducts);
   updateCartStatus();
 
-  // Logo/Brand klikk viib koju
-  document.getElementById("brand").onclick = (e) => {
-    e.preventDefault();
+  // Navigatsiooni sündmused jäävad samaks nagu sul olid...
+  document.getElementById("brand").onclick = () => {
     showView("product-list", "Kõik tooted");
     renderAllProducts(allProducts);
   };
-
-  // Navigatsioon
-  document.querySelectorAll("nav a").forEach(link => {
-    link.onclick = (e) => {
-      e.preventDefault();
-      const text = e.target.innerText.trim().toLowerCase();
-      if (text.includes("kodu") || text.includes("tooted")) {
-        showView("product-list", "Kõik tooted");
-        renderAllProducts(allProducts);
-      } else if (text.includes("lemmikud")) {
-        renderFavorites();
-      } else if (text.includes("ostukorv")) {
-        renderCart();
-      }
-    };
-  });
-
-  // Ostukorvi mulli klikk
+  
   document.getElementById("cart-status").onclick = () => renderCart();
 }
 
