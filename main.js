@@ -1,6 +1,6 @@
 import { Cart } from "./constructors/cart.js";
 import { Customer } from "./constructors/customer.js";
-import { fetchProducts, fetchData } from './api.js';
+import { fetchProducts, fetchData } from "./api.js";
 
 import { renderAllProducts } from "./Allviews/allProductsView.js";
 import { renderCart } from "./Allviews/cartView.js";
@@ -13,23 +13,22 @@ export const customer = new Customer("Oskar Tallo");
 let products = [];
 
 async function initApp() {
-    console.log("Rakendus käivitub...");
-    
-    products = await fetchProducts();
-    
-    if (products) {
-        console.log("Tooted laetud:", products);
-        renderAllProducts(products);
-    }
+  console.log("Rakendus käivitub...");
 
-    const data = await fetchData();
-    if (data) {
-        console.log("Kõik andmed bäkendist käes:", data);
-    }
+  products = await fetchProducts();
+
+  if (products) {
+    console.log("Tooted laetud:", products);
+    renderAllProducts(products);
+  }
+
+  const data = await fetchData();
+  if (data) {
+    console.log("Kõik andmed bäkendist käes:", data);
+  }
 }
 
 initApp();
-
 
 document.querySelector("#nav-home").addEventListener("click", (event) => {
   event.preventDefault();
@@ -40,11 +39,11 @@ document.querySelector("#nav-home").addEventListener("click", (event) => {
 });
 
 document.querySelector("#nav-brand").addEventListener("click", (event) => {
-    event.preventDefault();
-    document.querySelector("#product-list").style.display = "flex";
-    document.querySelector("#product-details").style.display = "none";
-    document.querySelector("#cart-view").style.display = "none";
-    document.querySelector("#favorites-view").style.display = "none";
+  event.preventDefault();
+  document.querySelector("#product-list").style.display = "flex";
+  document.querySelector("#product-details").style.display = "none";
+  document.querySelector("#cart-view").style.display = "none";
+  document.querySelector("#favorites-view").style.display = "none";
 });
 
 document.querySelector("#nav-cart").addEventListener("click", (event) => {
@@ -66,3 +65,19 @@ document.querySelector("#nav-favorites").addEventListener("click", (event) => {
 });
 
 export { products };
+
+if (!sessionStorage.getItem("customerId")) {
+  sessionStorage.setItem(
+    "customerId",
+    "user_" + Math.random().toString(36).substr(2, 9)
+  );
+}
+const currentCustomerId = sessionStorage.getItem("customerId");
+
+export function saveCartToLocal(cartItems) {
+  localStorage.setItem("shoppingCart", JSON.stringify(cartItems));
+}
+
+export function getCartFromLocal() {
+  return JSON.parse(localStorage.getItem("shoppingCart")) || [];
+}
