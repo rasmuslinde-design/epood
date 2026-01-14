@@ -1,5 +1,9 @@
 import { cart, favorites } from "../main.js";
-import { updateCartStatus, showHeartAnimation, showCartAnimation } from "./uiHelpers.js";
+import {
+  updateCartStatus,
+  showHeartAnimation,
+  showCartAnimation,
+} from "./uiHelpers.js";
 
 export function renderProductDetails(product) {
   const list = document.querySelector("#product-list");
@@ -13,19 +17,19 @@ export function renderProductDetails(product) {
     <img src="${product.image}" alt="${product.title}">
     <p>Kategooria: ${product.category}</p>
     <p>Hind: €${product.price.toFixed(2)}</p>
-    <p id="product-description">Kirjeldus: See on suurepärane toode nimega ${product.title}.</p>
+    <p id="product-description">Kirjeldus: See on suurepärane toode nimega ${
+      product.title
+    }.</p>
     <button id="back-button">Tagasi</button>
     <button class="add-to-cart">Lisa korvi</button>
     <button class="add-to-favorites">Lisa lemmikutesse</button>
   `;
 
-  // Back button
   details.querySelector("#back-button").addEventListener("click", () => {
     details.style.display = "none";
     list.style.display = "flex";
   });
 
-  // Add to cart
   details.querySelector(".add-to-cart").addEventListener("click", () => {
     cart.addProduct(product, 1);
     updateCartStatus();
@@ -33,7 +37,6 @@ export function renderProductDetails(product) {
     console.log(`${product.title} lisatud ostukorvi.`);
   });
 
-  // Add to favorites
   details.querySelector(".add-to-favorites").addEventListener("click", () => {
     if (!favorites.some((fav) => fav.id === product.id)) {
       favorites.push(product);

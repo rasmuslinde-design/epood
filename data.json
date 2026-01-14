@@ -1,0 +1,101 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Sülearvuti Windows 11 Pro",
+      "price": 999.99,
+      "category": "Arvutid",
+      "image": "images/pilt1.jpg",
+      "description": "Võimas ja usaldusväärne sülearvuti, mis sobib ideaalselt nii tööks kui meelelahutuseks. Varustatud uusima Windows 11 Pro operatsioonisüsteemiga, mis pakub sujuvat kasutajakogemust ja täiustatud turvafunktsioone."
+    },
+    {
+      "id": 2,
+      "title": "iPhone 17",
+      "price": 1199.99,
+      "category": "Nutitelefonid",
+      "image": "images/pilt1.jpg",
+      "description": "Uus iPhone 17, mis pakub revolutsioonilisi funktsioone ja täiustatud kaamerat."
+    },
+    {
+      "id": 3,
+      "title": "MacBook Pro 18",
+      "price": 2499.99,
+      "category": "Arvutid",
+      "image": "images/pilt1.jpg",
+      "description": "MacBook Pro 18 on võimas sülearvuti, mis sobib ideaalselt professionaalseks kasutamiseks."
+    },
+    {
+      "id": 4,
+      "title": "Samsung Galaxy S26",
+      "price": 1099.99,
+      "category": "Nutitelefonid",
+      "image": "images/pilt1.jpg",
+      "description": "Samsung Galaxy S26 on uus nutitelefon, mis pakub suurepärast jõudlust ja kaamerat."
+    },
+    {
+      "id": 5,
+      "title": "AirPods Ultra",
+      "price": 399.99,
+      "category": "Tarvikud",
+      "image": "images/pilt1.jpg",
+      "description": "AirPods Ultra pakub erakordset helikvaliteeti ja mugavust."
+    },
+    {
+      "id": 6,
+      "title": "Logitech MX Master 4",
+      "price": 99.99,
+      "category": "Tarvikud",
+      "image": "images/pilt1.jpg",
+      "description": "Logitech MX Master 4 on tipptasemel hiir, mis pakub erakordset täpsust ja mugavust."
+    },
+    {
+      "id": 7,
+      "title": "Dell XPS 15",
+      "price": 1299.99,
+      "category": "Arvutid",
+      "image": "images/pilt1.jpg",
+      "description": "Dell XPS 15 on võimas sülearvuti, mis sobib ideaalselt professionaalseks kasutamiseks."
+    },
+    {
+      "id": 8,
+      "title": "Google Pixel 8",
+      "price": 899.99,
+      "category": "Nutitelefonid",
+      "image": "images/pilt1.jpg",
+      "description": "Google Pixel 8 on uus nutitelefon, mis pakub suurepärast jõudlust ja kaamerat."
+    },
+    {
+      "id": 9,
+      "title": "Sony WH-1000XM5",
+      "price": 349.99,
+      "category": "Tarvikud",
+      "image": "images/pilt1.jpg",
+      "description": "Sony WH-1000XM5 on tipptasemel mürasummutavad kõrvaklapid, mis pakuvad erakordset helikvaliteeti."
+    },
+    {
+      "id": 10,
+      "title": "HP Spectre x360",
+      "price": 1399.99,
+      "category": "Arvutid",
+      "image": "images/pilt1.jpg",
+      "description": "HP Spectre x360 on elegantne ja võimas 2-in-1 sülearvuti, mis sobib ideaalselt nii tööks kui ka meelelahutuseks."
+    },
+    {
+      "id": 11,
+      "title": "OnePlus 12",
+      "price": 799.99,
+      "category": "Nutitelefonid",
+      "image": "images/pilt1.jpg",
+      "description": "OnePlus 12 on uus nutitelefon, mis pakub suurepärast jõudlust ja kaamerat."
+    },
+    {
+      "id": 12,
+      "title": "Apple Watch Series 9",
+      "price": 499.99,
+      "category": "Tarvikud",
+      "image": "images/pilt1.jpg",
+      "description": "Apple Watch Series 9 on uus nutikell, mis pakub suurepärast jõudlust ja funktsioone."
+    }
+  ],
+  "orders": []
+}

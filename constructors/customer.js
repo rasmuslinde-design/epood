@@ -1,4 +1,5 @@
 import { Order } from "/epood/constructors/order.js";
+import { saveOrder } from '../api.js';
 
 export class Customer {
   constructor(name) {
@@ -22,4 +23,18 @@ export class Customer {
       );
     });
   }
+}
+
+export async function submitOrder(cartItems, customerInfo) {
+    const order = {
+        customer: customerInfo,
+        items: cartItems,
+        total: cartItems.reduce((sum, item) => sum + item.price, 0)
+    };
+
+    const result = await saveOrder(order);
+    
+    if (result) {
+        alert('Tellimus edukalt saadetud!');
+    }
 }
