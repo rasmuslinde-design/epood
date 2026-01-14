@@ -4,7 +4,7 @@ import { renderCart } from "./Allviews/cartView.js";
 import { renderFavorites } from "./Allviews/favoritesView.js";
 import { updateCartStatus } from "./Allviews/uiHelpers.js";
 
-let allProducts = []; 
+let allProducts = [];
 
 export function showView(viewId, title) {
   const views = ["product-list", "product-details", "cart-view", "favorites-view"];
@@ -12,7 +12,12 @@ export function showView(viewId, title) {
   views.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
-      el.style.display = (id === viewId) ? "block" : "none";
+      if (id === viewId) {
+        // Pealeht peab olema FLEX, teised võivad olla BLOCK
+        el.style.display = (id === "product-list") ? "flex" : "block";
+      } else {
+        el.style.display = "none";
+      }
     }
   });
 
@@ -22,43 +27,23 @@ export function showView(viewId, title) {
 }
 
 async function init() {
-  // 1. Laeme tooted
   allProducts = await fetchProducts();
-  
-  // 2. Kuvame esimesena pealehe
   showView("product-list", "Kõik tooted");
   renderAllProducts(allProducts);
   updateCartStatus();
 
-  // 3. OSTUKORVI MULLI KLIKK
-  const cartStatus = document.getElementById("cart-status");
-  if (cartStatus) {
-    cartStatus.onclick = (e) => {
-      e.preventDefault();
-      renderCart();
-    };
-  }
+  // Logo/Brand klikk viib koju
+  document.getElementById("brand").onclick = (e) => {
+    e.preventDefault();
+    showView("product-list", "Kõik tooted");
+    renderAllProducts(allProducts);
+  };
 
-  // 4. LOGO KLIKK (Et ka logole vajutades saaks koju)
-  const brand = document.getElementById("brand");
-  if (brand) {
-    brand.onclick = (e) => {
-      e.preventDefault();
-      showView("product-list", "Kõik tooted");
-      renderAllProducts(allProducts);
-    }
-  }
-
-  // 5. NAVIGATSIOONI LINGID (Kodu, Lemmikud jne)
-  const navLinks = document.querySelectorAll("nav a");
-  navLinks.forEach(link => {
+  // Navigatsioon
+  document.querySelectorAll("nav a").forEach(link => {
     link.onclick = (e) => {
       e.preventDefault();
-      // Võtame teksti ja puhastame tühikutest ning muudame väiketähtedeks
       const text = e.target.innerText.trim().toLowerCase();
-      
-      console.log("Navigeerin siia:", text); // See aitab sul konsoolis näha, kas klikk toimib
-
       if (text.includes("kodu") || text.includes("tooted")) {
         showView("product-list", "Kõik tooted");
         renderAllProducts(allProducts);
@@ -69,7 +54,9 @@ async function init() {
       }
     };
   });
+
+  // Ostukorvi mulli klikk
+  document.getElementById("cart-status").onclick = () => renderCart();
 }
 
-// Käivitame poe
 init();
