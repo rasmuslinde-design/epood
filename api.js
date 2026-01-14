@@ -16,7 +16,7 @@ export const fetchProducts = async () => {
     return data ? data.products : [];
 };
 
-// Funktsioon tellimuse saatmiseks
+// Tellimuse saatmine
 export const saveOrder = async (orderData) => {
     try {
         const response = await fetch(`${API_URL}/order`, {

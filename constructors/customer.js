@@ -1,4 +1,4 @@
-import { Order } from "/epood/constructors/order.js";
+import { Order } from "./order.js";
 import { saveOrder } from '../api.js';
 
 export class Customer {

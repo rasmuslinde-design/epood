@@ -97,5 +97,15 @@
       "description": "Apple Watch Series 9 on uus nutikell, mis pakub suurepärast jõudlust ja funktsioone."
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "id": 1768376451631,
+      "customer": "Test Rasmus",
+      "items": [
+        "iPhone 17",
+        "AirPods Ultra"
+      ],
+      "total": 1599.98
+    }
+  ]
 }
