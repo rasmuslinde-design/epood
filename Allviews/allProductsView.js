@@ -1,4 +1,4 @@
-import { cart, favorites } from "./main.js";
+import { cart, favorites } from "../main.js";
 import { renderProductDetails } from "./productDetailView.js";
 import {
   updateCartStatus,

@@ -1,4 +1,4 @@
-import { cart } from "./main.js";
+import { cart } from "../main.js";
 import { updateCartStatus } from "./uiHelpers.js";
 
 export function renderCart() {
@@ -15,7 +15,9 @@ export function renderCart() {
     div.className = "cart-item";
 
     div.innerHTML = `
-      <img src="${item.product.image}" alt="${item.product.title}" class="cart-image">
+      <img src="${item.product.image}" alt="${
+      item.product.title
+    }" class="cart-image">
       <p>${item.product.title}</p>
       <button class="decrease">-</button>
       <span>${item.quantity}</span>
@@ -49,6 +51,8 @@ export function renderCart() {
   });
 
   const total = document.createElement("p");
-  total.innerHTML = `<strong>Kogusumma: €${cart.calculateTotal().toFixed(2)}</strong>`;
+  total.innerHTML = `<strong>Kogusumma: €${cart
+    .calculateTotal()
+    .toFixed(2)}</strong>`;
   container.appendChild(total);
 }

@@ -1,4 +1,4 @@
-import { cart } from "./main.js";
+import { cart } from "../main.js";
 
 export function updateCartStatus() {
   const status = document.querySelector("#cart-status");
