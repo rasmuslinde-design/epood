@@ -2,5 +2,26 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1"
-  }
+  },
+  "name": "epood",
+  "version": "1.0.0",
+  "description": "Node version 24.9.0 Express 5.2.1",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasmuslinde-design/epood.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rasmuslinde-design/epood/issues"
+  },
+  "homepage": "https://github.com/rasmuslinde-design/epood#readme"
 }

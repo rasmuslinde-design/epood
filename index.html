@@ -10,7 +10,7 @@
   <body>
     <header>
       <div id="brand">
-        <a href="#" id="brand-link">
+        <a href="/" id="brand-link">
           <img src="images/GoblinShack.png" alt="GoblinShack Logo" id="brand-logo" />
           <span id="brand-name">GoblinShack</span>
         </a>
@@ -18,17 +18,21 @@
       
       <nav>
         <ul>
-          <li><a href="#" id="nav-home"><i class="fas fa-home"></i> Kodu</a></li>
-          <li><a href="#" id="nav-favorites"><i class="fas fa-heart"></i> Lemmikud</a></li>
-          <li><a href="#" id="nav-cart"><i class="fas fa-shopping-basket"></i> Ostukorv</a></li>
+          <li><a href="/" id="nav-home"><i class="fas fa-home"></i> Kodu</a></li>
+          <li><a href="/lemmikud" id="nav-favorites"><i class="fas fa-heart"></i> Lemmikud</a></li>
+          <li><a href="/ostukorv" id="nav-cart"><i class="fas fa-shopping-basket"></i> Ostukorv</a></li>
+          <li><a href="/logisisse" id="nav-login"><i class="fas fa-user"></i> Logi sisse</a></li>
+          <li><a href="#" id="nav-logout" style="display:none;"><i class="fas fa-sign-out-alt"></i> Logi välja</a></li>
         </ul>
       </nav>
 
-      <div id="user-session-info" style="color: #ccc; font-size: 0.8rem; margin-right: 60px;">
-        Kasutaja: <span id="client-id-display">Laeb...</span>
+      <div class="header-right">
+        <div id="user-session-info">
+          <span id="welcome-user"></span> 
+          <span id="client-id-display">Laeb...</span>
+        </div>
+        <div id="cart-status" title="Vaata ostukorvi">🛒 0</div>
       </div>
-
-      <div id="cart-status" title="Vaata ostukorvi">🛒 0</div>
     </header>
 
     <main>
@@ -37,12 +41,10 @@
       <div id="category-filters"></div>
 
       <section id="product-list" class="view"></section>
-      
       <section id="product-details" class="view" style="display:none;"></section>
-      
       <section id="cart-view" class="view" style="display:none;"></section>
-      
       <section id="favorites-view" class="view" style="display:none;"></section>
+      <section id="login-view" class="view" style="display:none;"></section>
     </main>
 
     <footer>

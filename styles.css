@@ -56,15 +56,19 @@ header {
 }
 
 nav {
-  flex: 1;
+  flex: 2; /* Suurendasin numbrit, et keskel oleks rohkem ruumi */
   display: flex;
   justify-content: center;
+  align-items: center; /* See joondab nupud vertikaalselt keskele */
 }
 
 nav ul {
   list-style: none;
   display: flex;
   gap: 15px;
+  align-items: center; /* Kõik nupud samale kõrgusele */
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
@@ -401,4 +405,129 @@ footer {
     flex-direction: column;
     gap: 15px;
   }
+}
+/* --- PARANDATUD HEADER JA NAVIGATSIOON --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  padding: 0.8rem 2rem; /* Muudetud veidi õhulisemaks */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+  flex: 2; /* Annab nav-ile keskel rohkem ruumi */
+  display: flex;
+  justify-content: center;
+}
+
+/* UUS: Grupeerime kasutaja info ja ostukorvi paremale */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+#user-session-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Joondab teksti paremale */
+  justify-content: center;
+  text-align: right;
+  line-height: 1.2;
+  margin-right: 0 !important; /* Eemaldame vana margin-i */
+  min-width: 150px;
+}
+
+#welcome-user {
+  font-weight: 800; /* Teeme nime paksemaks */
+  color: #28a745;
+  font-size: 0.95rem;
+}
+
+#client-id-display {
+  color: #ccc;
+  font-size: 0.7rem;
+  background: transparent; /* Eemaldasin kasti, et oleks puhtam */
+  padding: 0;
+  opacity: 0.7;
+}
+
+/* --- SISSELOGIMISE VAADE KESKELE --- */
+/* Muudame vana #login-view ja .login-card stiili */
+
+#login-view {
+  display: none; /* JS muudab selle nähtavaks */
+  flex-direction: column;
+  justify-content: center !important; /* Horisontaalne keskmestamine */
+  align-items: center !important;    /* Vertikaalne keskmestamine */
+  min-height: 80vh !important;       /* Võtab 80% ekraani kõrgusest */
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.login-card {
+  background: white;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 420px; /* Hoiab vormi kompaktsena */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Nupud ja sisendid sisselogimises */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+.login-btn {
+  background: #222;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.login-btn:hover {
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Tagame, et pealkiri ei oleks sisselogimise ajal liiga ligidal */
+#main-heading {
+  text-align: center;
+  padding: 30px 0 10px 0;
 }
